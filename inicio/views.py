@@ -2,12 +2,14 @@ from django.http import HttpResponse
 from django.template import Template, Context, loader
 from datetime import datetime
 from django.shortcuts import render
+from inicio.models import Auto 
 
 def mi_vista (request):
     return HttpResponse ("soy la vista")
 
 def inicio (request):
-    return HttpResponse ("soy la pantalla de inicio")
+    #return HttpResponse ("soy la pantalla de inicio")
+    return render (request, "index.html") #con esto lo conectamos al html que lo usamos de pie para el bootstrap
 
 def vista_datos1 (request, nombre):
     nombre_mayuscula = nombre.upper()
@@ -51,3 +53,8 @@ def segundo_template (request):
     #v3
     
     return render (request, "segundo_template.html", datos)
+
+def creacion_auto (request, marca, modelo, año):
+    auto = Auto (marca= marca, modelo = modelo, año= año)
+    auto.save()
+    return render (request, "creacion_auto.html", {"auto": auto} )  
